@@ -1,0 +1,66 @@
+[
+    {
+        "model": "cart.product",
+        "pk": 1,
+        "fields": {
+            "name": "Widget1",
+            "description": "A nifty widget!",
+            "vendor": "Widget Co",
+            "price": "105.97"
+        }
+    },
+    {
+        "model": "cart.product",
+        "pk": 2,
+        "fields": {
+            "name": "Widget2",
+            "description": "An even niftier widget!",
+            "vendor": "Widget Co",
+            "price": "200.95"
+        }
+    },
+    {
+        "model": "cart.product",
+        "pk": 3,
+        "fields": {
+            "name": "Widget3",
+            "description": "A not so nifty widget.",
+            "vendor": "Cheapo Widgets",
+            "price": "55.98"
+        }
+    },
+    {
+        "model": "cart.cart",
+        "pk": 1,
+        "fields": {
+            "user": "user"
+        }
+    },
+    {
+        "model": "cart.item",
+        "pk": 1,
+        "fields": {
+            "cart": 1,
+            "product": 2,
+            "quantity": 3
+        }
+    },
+    {
+        "model": "cart.item",
+        "pk": 2,
+        "fields": {
+            "cart": 1,
+            "product": 1,
+            "quantity": 10
+        }
+    },
+    {
+        "model": "cart.item",
+        "pk": 3,
+        "fields": {
+            "cart": 1,
+            "product": 3,
+            "quantity": 7
+        }
+    }
+]

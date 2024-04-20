@@ -1,0 +1,17 @@
+{% load humanize %}
+{% load tax_tags %}
+
+{% comment %} We wouldn't hardcode the user's location in production. {% endcomment %}
+{% tax cart.total 'QC' as tax %}
+
+{% for item in cart.items %}
+    <div>
+        <span>{{ item.product.name }}</span>
+        <span>{{ item.product.price|intcomma }} &times; {{ item.quantity|intcomma }}: {{ item.total|intcomma }}</span>
+    </div>
+    <small>{{ item.product.vendor }} | {{ item.product.description }}</small>
+{% endfor %}
+<hr />
+<div>sub: {{ cart.total|floatformat:2|intcomma }}</div>
+<div>tax: {{ tax|floatformat:2|intcomma }}</div>
+<div>tot: {{ cart.total|add_decimals:tax|floatformat:2|intcomma }}</div>

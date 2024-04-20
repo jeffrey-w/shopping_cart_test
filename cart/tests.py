@@ -1,6 +1,8 @@
-from cart.models import Cart, Item, Product
 from decimal import Decimal
 from django.test import TestCase
+
+
+from cart.models import Cart, Item, Product
 
 class ModelTests(TestCase):
 

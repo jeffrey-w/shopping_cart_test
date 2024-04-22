@@ -3,8 +3,6 @@
 {% load bootstrap_icons %}
 {% load cart_extras %}
 
-{% tax cart.total location as tax %}
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,7 +33,7 @@
                         </small>
                     </div>
                     <div class='d-inline-flex align-items-center m-2'>
-                        {% with 'cart-quantity-'|addstr:item.id as id %}
+                        {% with id='cart-quantity-'|addstr:item.id %}
                         <label for='{{ id }}' class='form-label'><small>Quantity</small></label>
                         <input id='{{ id }}' class='form-control form-control-sm mx-2 w-25' type='number' min=1 value={{ item.quantity }} />
                         {% endwith %}
@@ -47,6 +45,7 @@
             
             <hr />
             <div>
+                {% with tax=cart.total|mul:tax_rate %}
                 <div class='d-flex justify-content-between'>
                     <span>Subtotal:</span>
                     <span>{{ cart.total|floatformat:2|intcomma }}<span>
@@ -59,6 +58,7 @@
                     <span class='fw-bold'>Total:</span>
                     <span class='fw-bold'>{{ cart.total|addnum:tax|floatformat:2|intcomma }}<span>
                 </div>
+                {% endwith %}
             </div>
         </div>
     </div>

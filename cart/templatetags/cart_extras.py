@@ -1,5 +1,4 @@
 from django import template
-from django.db.models.base import settings
 
 register = template.Library()
 
@@ -11,6 +10,6 @@ def addnum(first, second):
 def addstr(first, second):
     return str(first) + str(second)
 
-@register.simple_tag
-def tax(value, location):
-    return settings.TAX_STRATEGIES[location](value)
+@register.filter
+def mul(first, second):
+    return first * second

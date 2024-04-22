@@ -1,5 +1,8 @@
+import json
+
 from decimal import Decimal
 from django.test import TestCase
+from django.urls import reverse
 
 from cart.models import Cart, Item, Product
 
@@ -43,3 +46,31 @@ class ModelTests(TestCase):
     def test_updating_item_quantity_with_a_number_less_than_one_raises_error(self):
         item = Item.objects.create(quantity=1, product=self.product, cart=self.cart)
         self.assertRaises(ValueError, lambda: self.cart.update(item.id, 0))
+
+class ViewTests(TestCase):
+
+    def setUp(self):
+        self.cart = Cart.objects.create(user='user')
+        self.cart.add(Product.objects.create(name='test', description='test', vendor='test', price=Decimal("999.99")), 1)
+
+    def test_index(self):
+        response = self.client.get(reverse('index'))
+        self.assertEqual(200, response.status_code)
+        self.assertEqual(self.cart, response.context['cart'])
+    
+    def test_update_quantity_success(self):
+        response = self.client.post(reverse('update_quantity', args=[self.cart.items.first().id]), content_type='application/json',data={'quantity': 2})
+        content = json.loads(response.content)
+        self.assertEqual(200, response.status_code)
+        self.assertTrue(content['success'])
+    
+    def test_update_quantity_error(self):
+        response = self.client.post(reverse('update_quantity', args=[self.cart.items.first().id]), content_type='application/json', data={'quantity': 0})
+        content = json.loads(response.content)
+        self.assertEqual(200, response.status_code)
+        self.assertFalse(content['success'])
+    
+    def test_remove_item(self):
+        response = self.client.get(reverse('remove_item', args=[self.cart.items.first().id]), follow=True)
+        self.assertRedirects(response, expected_url='/cart/', status_code=302, target_status_code=200)
+        self.assertContains(response, 'No items.')

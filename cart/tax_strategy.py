@@ -1,5 +1,5 @@
 from decimal import Decimal
-from django.db.utils import settings
+from django.conf import settings
 
 def register_tax_strategy(location):
     def inner(func):

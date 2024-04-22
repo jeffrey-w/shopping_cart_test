@@ -8,7 +8,7 @@ class Product(models.Model):
     name = models.CharField(max_length=256)
     description = models.CharField(max_length=1024)
     vendor = models.CharField(max_length=32) # In production, this would most likely be a foreign key to a vendor table.
-    # pic = models.ImageField(upload_to='static') TODO implement image uploads.
+    pic = models.ImageField(upload_to='products', default=None, null=True)
     price = models.DecimalField(max_digits=16, decimal_places=2) # Use decimal for currency for arithmetic precision.
 
     def __str__(self):

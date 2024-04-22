@@ -6,6 +6,7 @@
             "name": "Widget1",
             "description": "A nifty widget!",
             "vendor": "Widget Co",
+            "pic": "/media/products/widget1.jpg",
             "price": "105.97"
         }
     },
@@ -16,6 +17,7 @@
             "name": "Widget2",
             "description": "An even niftier widget!",
             "vendor": "Widget Co",
+            "pic": "/media/products/widget2.jpg",
             "price": "200.95"
         }
     },
@@ -26,6 +28,7 @@
             "name": "Widget3",
             "description": "A not so nifty widget.",
             "vendor": "Cheapo Widgets",
+            "pic": "/media/products/widget3.jpg",
             "price": "55.98"
         }
     },

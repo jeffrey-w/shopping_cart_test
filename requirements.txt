@@ -1,1 +1,3 @@
 django
+django-bootstrap-icons
+django-bootstrap-v5

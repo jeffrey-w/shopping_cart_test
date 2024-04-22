@@ -2,8 +2,9 @@ import json
 
 from decimal import Decimal
 from django.http import JsonResponse
+from django.urls import reverse
 from django.views.decorators.http import require_GET, require_POST
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from cart.models import Cart
 from cart.tax_rates import get_tax_rate
@@ -39,3 +40,8 @@ def get_payload(cart):
 
 def decimal_to_string(decimal):
     return '{:,}'.format(decimal.quantize(TWO_PLACES))
+
+@require_GET
+def remove_item(request, item):
+    Cart.objects.get(user='user').remove(item)
+    return redirect(reverse('index'))

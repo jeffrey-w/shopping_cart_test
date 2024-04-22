@@ -40,14 +40,14 @@
                         <input id='{{ id }}' class='form-control form-control-sm mx-2 w-25' type='number' min=1 value={{ item.quantity }} 
                                data-href='{% url "update_quantity" item.id %}' />
                         {% endwith %}
-                        <a class='icon-link link-danger' data-item-id='{{ item_id }}'>
+                        <a class='icon-link link-danger' href='{% url "remove_item" item.id %}'>
                             {% bs_icon 'trash' %}
                         </a>
                     </div>
                 </div>
             </div>
             {% empty %}
-            <h1 class='text-center'>No items.</h1>
+            <h5 class='text-center'>No items.</h5>
             {% endfor %}
             
             <hr />

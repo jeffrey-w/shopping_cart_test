@@ -1,77 +1,72 @@
+{% extends "base.html" %}
+
 {% load humanize %}
-{% load static %}
 {% load bootstrap_icons %}
 {% load cart_extras %}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{% block title %}{% endblock %}</title>
-    <link rel='stylesheet' href='{% static "styles.css" %}'>
-    <script src='{% static "scripts.js" %}'></script>
-    {% load bootstrap5 %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-</head>
-<body>
+{% block title %}Cart{% endblock %}
+
+{% block content %}
+
 {% csrf_token %}
-<div class='container'>
-    <div class='card mt-5'>
-        <div class='card-header'><h3>Shopping Cart</h3></div>
-        <div class='card-body'>
-            {% for item in cart.items %}
-            <div class='d-flex m-2'>
-                <img class='product-image' src='{{ item.product.pic }}' alt='{{ "image of "|addstr:item.product.name }}' />
-                <div class='d-block ms-2 w-100'>
-                    <div>
-                        <div class='d-flex justify-content-between'>
-                            <span class='fw-bold'><a class='link-secondary text-decoration-none' href='#'>{{ item.product.name }}</a></span>
-                            <span class='text-end'>{{ item.product.price|intcomma }}</span>
-                        </div>
+<div class='card mt-5'>
+    <h3 class='card-header'>Shopping Cart</h3>
+    <div class='card-body'>
+        {% for item in cart.items %}
+        <div class='d-flex m-2'>
+            <img class='product-image' src='{{ item.product.pic }}' alt='{{ "image of "|addstr:item.product.name }}' />
+            <div class='d-block ms-2 w-100'>
+                <div>
+                    <div class='d-flex justify-content-between'>
+                        <span class='fw-bold'><a class='link-secondary text-decoration-none' href='#'>{{ item.product.name }}</a></span>
+                        <span class='text-end'>{{ item.product.price|intcomma }}</span>
                     </div>
-                    <div>
-                        <small class='m-2'>
-                            <a href='#'>{{ item.product.vendor }}</a> | {{ item.product.description }}
-                        </small>
-                    </div>
-                    <div class='d-inline-flex align-items-center m-2'>
-                        {% with id='cart-quantity-'|addstr:item.id %}
-                        <label for='{{ id }}' class='form-label'><small>Quantity</small></label>
-                        <input id='{{ id }}' class='form-control form-control-sm mx-2 w-25' type='number' min=1 value={{ item.quantity }} 
-                               data-href='{% url "update_quantity" item.id %}'
-                               data-item-id='{{ item.id }}' />
-                        {% endwith %}
-                        <a class='icon-link link-danger' href='{% url "remove_item" item.id %}'>
-                            {% bs_icon 'trash' %}
-                        </a>
-                    </div>
-                    <div style='display:hidden;'>
-                        <small id='{{ "cart-quantity-error-"|addstr:item.id }}' class='text-danger'></small>
-                    </div>
+                </div>
+                <div>
+                    <small>
+                        <a href='#'>{{ item.product.vendor }}</a> | {{ item.product.description }}
+                    </small>
+                </div>
+                <div class='d-inline-flex align-items-center m-2'>
+                    {% with id='cart-quantity-'|addstr:item.id %}
+                    <label for='{{ id }}' class='form-label'><small>Quantity</small></label>
+                    <input id='{{ id }}' class='form-control form-control-sm mx-2 w-25' type='number' min=1 value={{ item.quantity }} 
+                            data-href='{% url "update_quantity" item.id %}'
+                            data-item-id='{{ item.id }}' />
+                    {% endwith %}
+                    <a class='icon-link link-danger' href='{% url "remove_item" item.id %}'>
+                        {% bs_icon 'trash' %}
+                    </a>
+                </div>
+                <div style='display:hidden;'>
+                    <small id='{{ "cart-quantity-error-"|addstr:item.id }}' class='text-danger'></small>
                 </div>
             </div>
-            {% empty %}
-            <h5 class='text-center'>No items.</h5>
-            {% endfor %}
-            
-            <hr />
-            <div>
-                {% with tax=cart.total|mul:tax_rate %}
-                <div class='d-flex justify-content-between'>
-                    <span>Subtotal:</span>
-                    <span id='cart-subtotal'>{{ cart.total|floatformat:2|intcomma }}<span>
-                </div>
-                <div class='d-flex justify-content-between'>
-                    <span>Tax:</span>
-                    <span id='cart-tax'>{{ tax|floatformat:2|intcomma }}<span>
-                </div>
-                <div class='d-flex justify-content-between'>
-                    <span class='fw-bold'>Total:</span>
-                    <span id='cart-total' class='fw-bold'>{{ cart.total|addnum:tax|floatformat:2|intcomma }}<span>
-                </div>
-                {% endwith %}
+        </div>
+        {% empty %}
+        <h5 class='text-center'>No items.</h5>
+        {% endfor %}
+        
+        <hr />
+        <div>
+            {% with tax=cart.total|mul:tax_rate %}
+            <div class='d-flex justify-content-between'>
+                <span>Subtotal:</span>
+                <span id='cart-subtotal'>{{ cart.total|floatformat:2|intcomma }}<span>
             </div>
+            <div class='d-flex justify-content-between'>
+                <span>Tax:</span>
+                <span id='cart-tax'>{{ tax|floatformat:2|intcomma }}<span>
+            </div>
+            <div class='d-flex justify-content-between'>
+                <span class='fw-bold'>Total:</span>
+                <span id='cart-total' class='fw-bold'>{{ cart.total|addnum:tax|floatformat:2|intcomma }}<span>
+            </div>
+            {% endwith %}
         </div>
     </div>
 </div>
-</body>
+<div class='d-flex justify-content-end mt-4'>
+    <button class='btn btn-dark'>Place Order</button>
+</div>
+{% endblock %}

@@ -1,7 +1,6 @@
 from decimal import Decimal
 from django.test import TestCase
 
-
 from cart.models import Cart, Item, Product
 
 class ModelTests(TestCase):
@@ -40,3 +39,7 @@ class ModelTests(TestCase):
         self.cart.update(item.id, 2)
         self.assertEqual(count + 1, self.cart.count)
         self.assertEqual(self.product.price * 2, self.cart.total)
+    
+    def test_updating_item_quantity_with_a_number_less_than_one_raises_error(self):
+        item = Item.objects.create(quantity=1, product=self.product, cart=self.cart)
+        self.assertRaises(ValueError, lambda: self.cart.update(item.id, 0))

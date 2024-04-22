@@ -37,7 +37,7 @@ class Cart(models.Model):
     
     def update(self, id: int, quantity: int) -> int:
         if quantity < 1:
-            raise ValueError(f'Expected positive quantity: ${quantity}.')
+            raise ValueError('Please enter a quantity greater than or equal to 1.')
         return self.item_set.filter(pk=id).update(quantity=quantity)
     
     def __str__(self):

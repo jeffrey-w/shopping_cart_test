@@ -8,11 +8,13 @@
 <head>
     <title>{% block title %}{% endblock %}</title>
     <link rel='stylesheet' href='{% static "styles.css" %}'>
+    <script src='{% static "scripts.js" %}'></script>
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
 </head>
 <body>
+{% csrf_token %}
 <div class='container'>
     <div class='card mt-5'>
         <div class='card-header'><h3>Shopping Cart</h3></div>
@@ -35,12 +37,17 @@
                     <div class='d-inline-flex align-items-center m-2'>
                         {% with id='cart-quantity-'|addstr:item.id %}
                         <label for='{{ id }}' class='form-label'><small>Quantity</small></label>
-                        <input id='{{ id }}' class='form-control form-control-sm mx-2 w-25' type='number' min=1 value={{ item.quantity }} />
+                        <input id='{{ id }}' class='form-control form-control-sm mx-2 w-25' type='number' min=1 value={{ item.quantity }} 
+                               data-href='{% url "update_quantity" item.id %}' />
                         {% endwith %}
-                        {% bs_icon 'trash' %}
+                        <a class='icon-link link-danger' data-item-id='{{ item_id }}'>
+                            {% bs_icon 'trash' %}
+                        </a>
                     </div>
                 </div>
             </div>
+            {% empty %}
+            <h1 class='text-center'>No items.</h1>
             {% endfor %}
             
             <hr />
@@ -48,15 +55,15 @@
                 {% with tax=cart.total|mul:tax_rate %}
                 <div class='d-flex justify-content-between'>
                     <span>Subtotal:</span>
-                    <span>{{ cart.total|floatformat:2|intcomma }}<span>
+                    <span id='cart-subtotal'>{{ cart.total|floatformat:2|intcomma }}<span>
                 </div>
                 <div class='d-flex justify-content-between'>
                     <span>Tax:</span>
-                    <span>{{ tax|floatformat:2|intcomma }}<span>
+                    <span id='cart-tax'>{{ tax|floatformat:2|intcomma }}<span>
                 </div>
                 <div class='d-flex justify-content-between'>
                     <span class='fw-bold'>Total:</span>
-                    <span class='fw-bold'>{{ cart.total|addnum:tax|floatformat:2|intcomma }}<span>
+                    <span id='cart-total' class='fw-bold'>{{ cart.total|addnum:tax|floatformat:2|intcomma }}<span>
                 </div>
                 {% endwith %}
             </div>

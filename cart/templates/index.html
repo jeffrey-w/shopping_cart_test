@@ -1,4 +1,5 @@
 {% load humanize %}
+{% load static %}
 {% load bootstrap_icons %}
 {% load cart_extras %}
 
@@ -8,6 +9,7 @@
 <html>
 <head>
     <title>{% block title %}{% endblock %}</title>
+    <link rel='stylesheet' href='{% static "styles.css" %}'>
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
@@ -19,7 +21,7 @@
         <div class='card-body'>
             {% for item in cart.items %}
             <div class='d-flex m-2'>
-                <img src='{{ item.product.pic }}' style='width:10%;height:15%'/>
+                <img class='product-image' src='{{ item.product.pic }}' alt='{{ "image of "|addstr:item.product.name }}' />
                 <div class='d-block ms-2 w-100'>
                     <div>
                         <div class='d-flex justify-content-between'>

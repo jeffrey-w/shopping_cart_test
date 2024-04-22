@@ -25,24 +25,28 @@
                 <div class='d-block ms-2 w-100'>
                     <div>
                         <div class='d-flex justify-content-between'>
-                            <span class='fw-bold'>{{ item.product.name }}</span>
+                            <span class='fw-bold'><a class='link-secondary text-decoration-none' href='#'>{{ item.product.name }}</a></span>
                             <span class='text-end'>{{ item.product.price|intcomma }}</span>
                         </div>
                     </div>
                     <div>
                         <small class='m-2'>
-                            {{ item.product.vendor }} | {{ item.product.description }}
+                            <a href='#'>{{ item.product.vendor }}</a> | {{ item.product.description }}
                         </small>
                     </div>
                     <div class='d-inline-flex align-items-center m-2'>
                         {% with id='cart-quantity-'|addstr:item.id %}
                         <label for='{{ id }}' class='form-label'><small>Quantity</small></label>
                         <input id='{{ id }}' class='form-control form-control-sm mx-2 w-25' type='number' min=1 value={{ item.quantity }} 
-                               data-href='{% url "update_quantity" item.id %}' />
+                               data-href='{% url "update_quantity" item.id %}'
+                               data-item-id='{{ item.id }}' />
                         {% endwith %}
                         <a class='icon-link link-danger' href='{% url "remove_item" item.id %}'>
                             {% bs_icon 'trash' %}
                         </a>
+                    </div>
+                    <div style='display:hidden;'>
+                        <small id='{{ "cart-quantity-error-"|addstr:item.id }}' class='text-danger'></small>
                     </div>
                 </div>
             </div>

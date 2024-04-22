@@ -12,11 +12,15 @@ async function updateQuantity(e)
         });
     const json = await response.json();
     if (json.success) {
+        const error = document.getElementById(`cart-quantity-error-${e.target.dataset.itemId}`);
+        error.style.display = 'none';
         setInnerText('cart-subtotal', json.payload.subtotal);
         setInnerText('cart-tax', json.payload.tax);
         setInnerText('cart-total', json.payload.total);
     } else {
-        console.log(json.error);
+        const error = document.getElementById(`cart-quantity-error-${e.target.dataset.itemId}`);
+        error.innerText = json.error;
+        error.style.display = 'block';
     }
 }
 

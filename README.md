@@ -54,7 +54,7 @@ docker build . -t cart-app
 docker run -p 8000:8000 cart-app:latest
 ```
 
-Whether you are running the application locally or in a container, you may reach it in your browser at [localhost:8000/cart](localhost:8000/cart).
+Whether you are running the application locally or in a container, you may reach it in your browser at [localhost:8000](http://localhost:8000/cart).
 
 ## Testing
 

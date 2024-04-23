@@ -59,3 +59,7 @@ Whether you are running the application locally or in a container, you may reach
 ## Testing
 
 Unit tests may be run with the command `python manage.py test`.
+
+## Demo
+
+You can view a short demonstration of the application [here](https://youtu.be/00KKmfpbuJk)

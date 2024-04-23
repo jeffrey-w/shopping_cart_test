@@ -55,3 +55,7 @@ docker run -p 8000:8000 cart-app:latest
 ```
 
 Whether you are running the application locally or in a container, you may reach it in your browser at [localhost:8000/cart](localhost:8000/cart).
+
+## Testing
+
+Unit tests may be run with the command `python manage.py test`.

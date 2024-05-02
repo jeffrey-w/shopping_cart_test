@@ -21,7 +21,7 @@ class ModelTests(TestCase):
     def test_non_empty_cart_has_expected_count(self):
         count = self.cart.count
         item = self.cart.add(self.product, 1)
-        self.assertEquals(count + item.quantity, self.cart.count)
+        self.assertEqual(count + item.quantity, self.cart.count)
     
     def test_non_empty_cart_has_expected_total(self):
         item = self.cart.add(self.product, 1)
